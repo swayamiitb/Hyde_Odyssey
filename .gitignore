@@ -6,3 +6,6 @@ data_r1/
 data3/
 books/
 .zcode/
+
+local_runs/
+.pytest_cache/

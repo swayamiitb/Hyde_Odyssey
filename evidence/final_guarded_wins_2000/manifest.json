@@ -1,0 +1,24 @@
+{
+  "a": "research_20261017/final_submission/agent.py",
+  "b": "examples/f_agent.py",
+  "games": 2000,
+  "workers": 8,
+  "seed0": 920000,
+  "key": "codex-frozen-final-20261017-1109b",
+  "name": "final_guarded_wins_2000",
+  "python": "3.11.17 (main, Oct 14 2026, 01:04:22) [MSC v.1944 64 bit (AMD64)]",
+  "source_hashes": {
+    "a": "40963e396f6e87c1afa0e17e62e27417f7258e7786306afe7e928db5e02bf398",
+    "b": "29b49c4fb9a29b3fc3c7b34787bb616e7978c2c844837a6077694b2f3fd8c115"
+  },
+  "harness_hashes": {
+    "evaluate.py": "a24467bcc6c339b194ba7a346a2fae8a1f2aa28fb41e315803587fb4d4cd7ee3",
+    "host.py": "362e66c3493840b3a73fc87190bd6cea909d83302102c91a35753df8cc295860",
+    "match.py": "da9136e809d0d19c7267af528e069f0f95f310a0079afc2f2dbc5e4cb9d98f00",
+    "obs.py": "102920ecd19615ce20174ba2eb0fd073d5bf34810dc13d0b9011d7dcd05faabe",
+    "sandbox.py": "e8e9378b16006fb7bd676cbbc8c6ae263a1e95290f077010e47a9e7ae7392bb4",
+    "selfcheck.py": "6d28d1f752a76f7361856d54f9f9f027ad2c42276a4541207caf2cc93abca20c",
+    "_patch.py": "53565394fe043ab0a4cc32100a1c5f6d346902b60f2faac8dfc8f3f207663ca7",
+    "__init__.py": "3abc5016663e58dbbeed3b93520bab89de3b671919ce2c27d4b2536ebda5ff87"
+  }
+}

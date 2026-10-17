@@ -1,0 +1,11 @@
+{
+  "agent_sha256": "a43d291a1cd984f67e59b7e24a4105c79c3110fa8ad164e45b3619e98927ba06",
+  "source_run": "learned_final_1000",
+  "status": "Locally validated snapshot. Official upload and organizer scores are not established by these files.",
+  "runtime_files": [
+    "agent.py"
+  ],
+  "weights": "ML_BIAS and ML_TREES embedded in agent.py",
+  "source_commit_before_documentation": "4353cef",
+  "excluded": "Later experiments running in another task are outside this frozen report."
+}

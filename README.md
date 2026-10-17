@@ -1,63 +1,115 @@
-# Hyde_Odyssey — Hyde × WnCC Catan AI Hackathon (17 Oct 2026, IIT Bombay)
+# Odyssey Catan Agent
 
-Our build for the 2-player Catan agent challenge on the pinned catanatron
-engine (`lyric-hyde/catan-hackathon-agent` kit): one CPU core, a chess-style
-CPU clock (300 ms + 12.5 ms/decision, ≤1.5 s/game), Python-only, scored vs
-the anchor bots F and O.
+Team Odyssey's agent for the [Hyde × WnCC Catan challenge](https://github.com/lyric-hyde/catan-hackathon-agent/blob/main/PROBLEM_STATEMENT.md).
 
-## Final result
+The verified release combines joint opening placement, resource-aware evaluation, bounded same-turn search and a compact learned value model. It won **797 of 1,000 local games against F (79.7%)**, with no faults or clock overruns recorded for either player.
 
-Three validated submissions (statistical twins of one measured distribution,
-submitted as independent draws under the best-of-submissions rule):
+These are local results from the official match harness on Windows with Python 3.11.17. They do not establish an organizer score, a leaderboard rank, or performance against O. This repository pins the tested learned release. Later experiments are outside this snapshot.
 
-| Zip | Agent | Win rate vs F (1,000 games, fresh seeds) | Mean CPU/game |
-|---|---|---|---|
-| `sub1.zip` | v4 — corrected eval + joint placement + gated depth-2 | 0.5230 ±0.0310 | 338 ms |
-| `sub2.zip` | v17 — v4 + hidden-VP denial gate + build-tempo bonus | 0.5260 ±0.0309 | 313 ms |
-| `sub3.zip` | v8 — Texel(logistic)-fitted linear eval (ships encoder.py + texel_eval.npz) | 0.5250 ±0.0310 | 379 ms |
+## Submission and presentation
 
-All: 0 faults, 0 games over the clock, ~⅓ of the CPU allowance used.
-Robustness portfolio: 200/200 vs road-rusher / city-builder / dev-spammer /
-VP-chaser; 0.52 vs tuned contender-F.
+| Deliverable | File |
+|---|---|
+| Runtime submission ZIP | [Odyssey_submission.zip](releases/Odyssey_submission.zip) |
+| Technical report, 4 A4 pages, single column, 11 pt body | [Odyssey_Report.pdf](docs/Odyssey_Report.pdf) |
+| Editable presentation, 6 slides | [Odyssey_Presentation.pptx](docs/Odyssey_Presentation.pptx) |
+| Six-minute script and technical questions | [Presentation notes](PRESENTATION.md) |
+| Submission requirements and file guide | [SUBMISSION_GUIDE.md](SUBMISSION_GUIDE.md) |
 
-## Contents
+## Verified results
 
-- `my_team/` — every agent version (v1…v17), shared encoder, fitted weights,
-  sparring/zoo bots, STRATEGY_TERMS.md (book distillation).
-- `experiments.md` — **the ledger**: 27 measured variants, every failure with
-  its mechanism, every seed range logged.
-- `REPORT_FINAL.md` — the 4-page competition report. `REPORT.md` — long-form.
-- `PRESENTATION.md` — 6-minute script + measured-answer question bank.
-- `*_gen*.py`, `train_*.py`, `texel_fit.py`, `tuner.py`, `diag_score.py`,
-  `wf_eval.py` — the day's tooling (self-play generators, trainers, tuner,
-  diagnostics, cwd-safe eval driver).
-- `*_CONTEXT*.md` — the full engineering record of the day.
+| Experiment | Wins against F | Mean local CPU/game | Faults / over-clock |
+|---|---:|---:|---:|
+| Frozen heuristic holdout | 1,592 / 2,000 (79.6%) | 316.3 ms | 0 / 0 |
+| Frozen learned holdout | **797 / 1,000 (79.7%)** | **393.4 ms** | **0 / 0** |
 
-## Reproduce any number
+The learned holdout has a board-pair clustered 95% interval of **77.18%–82.22%**. Both seats share each board and dice stream. The two holdouts use different boards, so the 0.1 percentage-point difference is not evidence that learning improves play.
 
-From a clone of the official kit (Python 3.11, `pip install -r requirements.txt`):
+On the matched 400-game selection screen, the heuristic won 316 games, the 0.4 learned blend won 318, and the 0.9 blend won 317. The chosen blend's two-win lead is weak evidence. See the [experiment ledger](experiments.md), [selection record](evidence/selection.json) and [fresh holdout](evidence/learned_final_1000/summary.json).
 
-```bash
+## How the agent works
+
+1. **Joint opening placement.** Score settlement pairs for resource coverage, ports, expansion and the opponent's likely choices.
+2. **Resource-aware afterstates.** Evaluate points, economy, useful hand resources, expansion and award progress after each action.
+3. **Bounded same-turn search.** Keep up to six candidates, search up to five action levels and cap expansion at 160 nodes. Follow-up search gets at most 18 ms, adjusted to the remaining clock.
+4. **Tactical checks.** Prioritize winning builds and short bank-trade sequences. Use a legal fallback when the clock is low.
+5. **Learned value adjustment.** Add 0.4 times a 64-tree model logit outside opening placement.
+
+Development-card purchase scores average over the publicly unseen multiset. The policy does not depend on a favorable sampled deck order or on the opponent's real concealed development-card types.
+
+## Where are the weights
+
+The runtime [agent.py](submission/agent.py) contains both the decision code and the trained parameters, in **ML_BIAS** and **ML_TREES**. That is why the upload ZIP contains only one file.
+
+The inspectable export is [models/value_model.json](models/value_model.json). The training set, feature extractor and trainer are in [training/](training/). This release uses gradient-boosted trees, so it does not require a PyTorch checkpoint at runtime. Older neural checkpoints under my_team/ belong to historical experiments.
+
+Training used 1,000 offline games, 124,344 positions and 91 features. Whole-game validation produced AUC 0.8848 and log loss 0.4285. **AUC is a prediction metric, not a win rate.**
+
+## Reproduce
+
+Use Python 3.11 and the exact requirements from a separate clone of the [official kit](https://github.com/lyric-hyde/catan-hackathon-agent). Do not substitute the PyPI catanatron release.
+
+Set the kit path in an activated Python 3.11 environment:
+
+~~~powershell
+$env:CATAN_KIT_ROOT = 'C:\absolute\path\to\catan-hackathon-agent'
+$env:PYTHONPATH = $env:CATAN_KIT_ROOT
+python -m pip install -r "$env:CATAN_KIT_ROOT\requirements.txt"
 python -m catan_kit.selfcheck
-python -m catan_kit.evaluate --a my_team/v4.py --b examples/f_agent.py --games 1000 --seed0 2000000
-```
+python -m unittest discover -s tests -v
+python tools/verify_evidence.py
+~~~
 
-Seed ranges per experiment are recorded in `experiments.md`.
+On Linux or macOS, set the same variables with export:
 
-## Highlights (see report)
+~~~bash
+export CATAN_KIT_ROOT=/absolute/path/to/catan-hackathon-agent
+export PYTHONPATH="$CATAN_KIT_ROOT"
+~~~
 
-- F's evaluation reconstructed from the pinned engine source; five surviving
-  corrections, led by the opponent-VP term that prices LR/LA denial.
-- Same-turn search proven exhausted: a 10×-depth teacher disagrees with the
-  shipped agent on **0 of 391** decisions.
-- Outcome-label distillation proven gradient-free at this scale (deployed
-  scorer matches its model at ρ=1.000 and still ranks badly); preference
-  rankers fail to transfer at all eight measured scales.
-- A cross-turn (dice-sampled opponent-reply) teacher disagrees with greedy on
-  30% of decisions — the identified but clock-gated frontier.
+From this repository, repeat the final protocol:
 
-Public material used (per fair-play rule 2): catanatron (GPL-3.0, pinned
-commit), its author's post-mortem writings, Texel tuning (chessprogramming.org),
-Buro 2002, Tesauro TD-Gammon, Anthony et al. 2017, Guhe & Lascarides 2014,
-EfficientZero/ReZero, Oh et al. — ideas only; all code, weights, and
-experiments are our own work built during the event.
+~~~bash
+python tools/benchmark.py --a submission/agent.py --games 1000 --workers 4 --seed0 990000 --key untouched-learned-final-20261017 --name reproduce_learned
+~~~
+
+The wrapper calls the unmodified official match function with clocks enabled. It freezes both sources, uses fixed 40-game batches, saves every game, and rejects incomplete results or a reused run name. Timings and deadline-limited search can vary across machines. This local dice key belongs to our experiment, not the organizer evaluation.
+
+To generate new training data and fit a new model:
+
+~~~bash
+python training/train_value.py --games 1000 --workers 4
+~~~
+
+New training outputs stay under training/. They do not replace the verified model or release automatically. Re-evaluate changed agents before packaging.
+
+## Repository map
+
+| Location | Purpose |
+|---|---|
+| [submission/](submission/) | Frozen standalone runtime source |
+| [releases/](releases/) | Runtime-only upload ZIP |
+| [docs/](docs/) | Report, slides and editable text sources |
+| [models/](models/) | Learned parameters and fit metrics |
+| [training/](training/) | Dataset, features, heuristic teacher and trainer |
+| [evidence/](evidence/) | Completed runs, source snapshots, manifests and raw games |
+| [tools/](tools/) | Clocked benchmark, evidence verifier and ZIP builder |
+| [tests/](tests/) | Five focused behavior regressions |
+| [docs/history/](docs/history/) | Previous README, reports and ledger |
+| [my_team/](my_team/) and older root scripts | Historical versions and research tooling |
+
+The previous 52–53% descriptions remain in the history directory. They describe earlier versions and do not identify this release. Older one-off claims remain historical notes, not revalidated results for the current agent.
+
+## Release identity and limitations
+
+Agent SHA-256:
+
+~~~text
+a43d291a1cd984f67e59b7e24a4105c79c3110fa8ad164e45b3619e98927ba06
+~~~
+
+The [release record](evidence/release.json) identifies the measured source. The evidence verifier checks raw win counts, source hashes, embedded model parameters and ZIP contents.
+
+O performance and group robustness are unmeasured. The F-aware opening and training distribution may specialize to one opponent. Local clocks do not guarantee organizer-machine timing. This repository contains no evidence of a 90% win rate.
+
+Public components and development assistance are described in [NOTICE.md](NOTICE.md). Runtime play uses no language-model calls, networking or worker processes.

@@ -1,0 +1,58 @@
+{
+  "a": {
+    "games": 2000,
+    "wins": 1592,
+    "win_rate": 0.796,
+    "ci95": 0.017660894292192565,
+    "no_winner": 0,
+    "mean_cpu_s": 0.31634375,
+    "worst_cpu_s": 1.421875,
+    "decisions": 110042,
+    "games_over_budget": 0,
+    "random_moves": 0,
+    "errors": 0,
+    "timeouts": 0,
+    "crashes": 0,
+    "wilson95": [
+      0.777779,
+      0.813086
+    ],
+    "board_cluster95": [
+      0.7783638153386452,
+      0.8136361846613549
+    ],
+    "wins_by_seat": {
+      "True": 786,
+      "False": 806
+    }
+  },
+  "b": {
+    "games": 2000,
+    "wins": 408,
+    "win_rate": 0.204,
+    "ci95": 0.01766089429219257,
+    "no_winner": 0,
+    "mean_cpu_s": 0.1975234375,
+    "worst_cpu_s": 0.5625,
+    "decisions": 88971,
+    "games_over_budget": 0,
+    "random_moves": 0,
+    "errors": 0,
+    "timeouts": 0,
+    "crashes": 0,
+    "wilson95": [
+      0.186914,
+      0.222221
+    ],
+    "board_cluster95": [
+      0.18636381533864513,
+      0.22163618466135485
+    ],
+    "wins_by_seat": {
+      "True": 214,
+      "False": 194
+    }
+  },
+  "wall_s": 193.125,
+  "complete": true
+}
