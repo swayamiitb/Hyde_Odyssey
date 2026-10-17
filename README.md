@@ -14,6 +14,7 @@ These are local results from the official match harness on Windows with Python 3
 | Technical report, 4 A4 pages, single column, 11 pt body | [Odyssey_Report.pdf](docs/Odyssey_Report.pdf) |
 | Editable presentation, 6 slides | [Odyssey_Presentation.pptx](docs/Odyssey_Presentation.pptx) |
 | Six-minute script and technical questions | [Presentation notes](PRESENTATION.md) |
+| Training log, settings and exact model reproduction | [TRAINING_LOG.md](TRAINING_LOG.md) · [Plain text](TRAINING_LOG.txt) |
 | Submission requirements and file guide | [SUBMISSION_GUIDE.md](SUBMISSION_GUIDE.md) |
 
 ## Verified results
@@ -92,6 +93,7 @@ New training outputs stay under training/. They do not replace the verified mode
 | [docs/](docs/) | Report, slides and editable text sources |
 | [models/](models/) | Learned parameters and fit metrics |
 | [training/](training/) | Dataset, features, heuristic teacher and trainer |
+| [training_logs/](training_logs/) | Original metrics, reconstructed collection counts, actual refit console log and input hashes |
 | [evidence/](evidence/) | Completed runs, source snapshots, manifests and raw games |
 | [tools/](tools/) | Clocked benchmark, evidence verifier and ZIP builder |
 | [tests/](tests/) | Five focused behavior regressions |

@@ -1,0 +1,92 @@
+{
+  "log_type": "Evidence reconstruction plus a separately timestamped deterministic refit",
+  "original_console_transcript": "Not available as a saved standalone file in this snapshot",
+  "release_sha256": "a43d291a1cd984f67e59b7e24a4105c79c3110fa8ad164e45b3619e98927ba06",
+  "input_hashes": {
+    "training/value_training.npz": "160665f002eca4fd68b9293345b824d094dd20dfa7f77fdb1ace5edbc40ef33d",
+    "training/train_value.py": "fe1fb5cc2f0ac79c73f35204d78c99a436fdefbc2b8e64e9d62bf3255136c1c2",
+    "training/heuristic_agent.py": "40963e396f6e87c1afa0e17e62e27417f7258e7786306afe7e928db5e02bf398",
+    "training/learned_features.py": "f11aa50faf2d5e68a5767e749773151932a4a69d379b95f864149a435c80329b",
+    "models/value_model.json": "ae46b27b2d2b32edd3de0830ddfe4b482289736ba076be9d1da4420d5ea9209a",
+    "models/training_metrics.json": "f9801a7849bc53009569941d3b7a00ed32167618b5f92bf7753807527a7ecc51",
+    "submission/agent.py": "a43d291a1cd984f67e59b7e24a4105c79c3110fa8ad164e45b3619e98927ba06"
+  },
+  "environment_of_reproduction": {
+    "python": "3.11.17",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "scikit_learn": "1.9.1",
+    "fit_thread_limit": 2
+  },
+  "dataset": {
+    "positions": 124344,
+    "features": 91,
+    "games": 1000,
+    "game_id_min": 0,
+    "game_id_max": 999,
+    "fit_games": 800,
+    "heldout_games": 200,
+    "fit_positions": 98598,
+    "heldout_positions": 25746,
+    "positive_labels": 62172,
+    "negative_labels": 62172,
+    "split_rule": "Whole game held out if game_id % 5 == 0",
+    "labels": "Eventual win for the player perspective; positions collected at END_TURN",
+    "input_dtype": "float64",
+    "finite_features": true,
+    "game_overlap": 0
+  },
+  "parameters": {
+    "categorical_features": "from_dtype",
+    "class_weight": null,
+    "early_stopping": "auto",
+    "interaction_cst": null,
+    "l2_regularization": 15,
+    "learning_rate": 0.1,
+    "loss": "log_loss",
+    "max_bins": 255,
+    "max_depth": 3,
+    "max_features": 1.0,
+    "max_iter": 64,
+    "max_leaf_nodes": 7,
+    "min_samples_leaf": 80,
+    "monotonic_cst": null,
+    "n_iter_no_change": 10,
+    "random_state": 483,
+    "scoring": "loss",
+    "tol": 1e-07,
+    "validation_fraction": 0.1,
+    "verbose": 1,
+    "warm_start": false
+  },
+  "original_recorded_metrics": {
+    "training_games": 1000,
+    "states": 124344,
+    "features": 91,
+    "heldout_game_auc": 0.8847908707892977,
+    "heldout_logloss": 0.4285112021804064,
+    "wall_s": 85.66298580169678
+  },
+  "reproduction": {
+    "kind": "new_reproduction_run_from_frozen_dataset",
+    "started_utc": "2026-10-17T11:57:13.227615+00:00",
+    "finished_utc": "2026-10-17T11:57:14.379205+00:00",
+    "wall_seconds": 0.953521899999032,
+    "boosting_iterations": 64,
+    "heldout_game_auc": 0.8847908707892977,
+    "heldout_logloss": 0.4285112021804064,
+    "exported_trees_exactly_match_release": true,
+    "pure_python_vs_fitted_max_logit_error_100_vectors": 0.0,
+    "auc_matches_recorded_metric": true,
+    "logloss_matches_recorded_metric": true
+  },
+  "collection_seed_rules": {
+    "board_seed": "1500000 + game_id",
+    "dice_seed": "6000001 + game_id",
+    "agent_rng_seed": "90001 + 2 * game_id + player_index"
+  },
+  "offline_clock_observation": 0.8,
+  "clock_disclosure": "Data generation uses an offline driver, not an official-clock score. Gameplay benchmarks use the unmodified official match harness.",
+  "source_commit_before_log": "3b9076bae03e5bfb7134a70d078e4ce44a641b83"
+}

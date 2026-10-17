@@ -1,0 +1,13 @@
+{
+  "kind": "new_reproduction_run_from_frozen_dataset",
+  "started_utc": "2026-10-17T11:57:13.227615+00:00",
+  "finished_utc": "2026-10-17T11:57:14.379205+00:00",
+  "wall_seconds": 0.953521899999032,
+  "boosting_iterations": 64,
+  "heldout_game_auc": 0.8847908707892977,
+  "heldout_logloss": 0.4285112021804064,
+  "exported_trees_exactly_match_release": true,
+  "pure_python_vs_fitted_max_logit_error_100_vectors": 0.0,
+  "auc_matches_recorded_metric": true,
+  "logloss_matches_recorded_metric": true
+}

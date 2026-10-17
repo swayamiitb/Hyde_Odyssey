@@ -1,0 +1,8 @@
+{
+  "training_games": 1000,
+  "states": 124344,
+  "features": 91,
+  "heldout_game_auc": 0.8847908707892977,
+  "heldout_logloss": 0.4285112021804064,
+  "wall_s": 85.66298580169678
+}

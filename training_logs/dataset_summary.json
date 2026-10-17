@@ -1,0 +1,18 @@
+{
+  "positions": 124344,
+  "features": 91,
+  "games": 1000,
+  "game_id_min": 0,
+  "game_id_max": 999,
+  "fit_games": 800,
+  "heldout_games": 200,
+  "fit_positions": 98598,
+  "heldout_positions": 25746,
+  "positive_labels": 62172,
+  "negative_labels": 62172,
+  "split_rule": "Whole game held out if game_id % 5 == 0",
+  "labels": "Eventual win for the player perspective; positions collected at END_TURN",
+  "input_dtype": "float64",
+  "finite_features": true,
+  "game_overlap": 0
+}

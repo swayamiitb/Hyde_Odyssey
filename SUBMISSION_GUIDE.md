@@ -6,8 +6,11 @@
 - Report: [docs/Odyssey_Report.pdf](docs/Odyssey_Report.pdf).
 - Slides: [docs/Odyssey_Presentation.pptx](docs/Odyssey_Presentation.pptx).
 - Speaker script and questions: [PRESENTATION.md](PRESENTATION.md).
+- Training log supplement: [TRAINING_LOG.txt](TRAINING_LOG.txt), with a [formatted version](TRAINING_LOG.md) and [supporting records](training_logs/).
 
 The full repository archive is supporting material. The runtime upload ZIP contains agent.py at its root. The learned parameters are embedded in that file.
+
+The training log is a separate supplement and does not change the four-page report or six-slide deck. It combines preserved training evidence with a separately timestamped refit that exactly reproduces the shipped model. The original standalone console transcript was unavailable; reconstructed entries are explicitly labeled.
 
 ## Rules checked
 
