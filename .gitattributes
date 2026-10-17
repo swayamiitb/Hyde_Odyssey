@@ -1,8 +1,8 @@
 # Preserve byte-identical sources and manifests used by the recorded SHA-256 checks.
-submission/** -text
-evidence/** -text
-models/** -text
-training/heuristic_agent.py -text
+submission/** -text whitespace=cr-at-eol
+evidence/** -text whitespace=cr-at-eol
+models/** -text whitespace=cr-at-eol
+training/heuristic_agent.py -text whitespace=cr-at-eol
 training/value_training.npz -text
 *.zip binary
 *.pdf binary
